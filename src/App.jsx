@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI("AIzaSyDm5td-E-SSh5xKiAzWTCNQlXtyBiNU45Q");
+const genAI = new GoogleGenerativeAI("AIzaSyB_SPPlOaJDAMmT1ZStKNzQI8Sd5L-nN2A");
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -14,18 +14,14 @@ export default function App() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
-
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       const result = await model.generateContent(
-        `You are Krysed, an AI tutor helping students in crisis zones like earthquakes and pandemics. 
-         Be supportive, clear, and teach in simple language. 
-         The student says: ${input}`
+        `You are Krysed, an AI tutor helping students in crisis zones. Be supportive and teach in simple language. The student says: ${input}`
       );
       const aiMessage = { role: "ai", text: result.response.text() };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
-      console.error(error);
       setMessages((prev) => [...prev, { role: "ai", text: "Error: " + error.message }]);
     }
     setLoading(false);
@@ -33,7 +29,7 @@ export default function App() {
 
   return (
     <div style={{ background: "#0a0a0a", minHeight: "100vh", color: "white", fontFamily: "sans-serif", padding: "20px" }}>
-      <h1 style={{ color: "#10b981", textAlign: "center" }}>🛡️ Krysed</h1>
+      <h1 style={{ color: "#10b981", textAlign: "center" }}>Krysed</h1>
       <p style={{ textAlign: "center", color: "#888" }}>Learning Never Stops, Even When the World Does</p>
       <div style={{ maxWidth: "600px", margin: "0 auto" }}>
         <div style={{ background: "#111", borderRadius: "12px", padding: "20px", minHeight: "300px", marginBottom: "20px" }}>
@@ -60,7 +56,7 @@ export default function App() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Ask anything — math, science, history..."
+            placeholder="Ask anything..."
             style={{ flex: 1, padding: "12px", borderRadius: "8px", border: "none", background: "#111", color: "white", fontSize: "16px" }}
           />
           <button
